@@ -427,7 +427,7 @@
 							return false;
 						}
 					);
-					horizontalTrackWidth = container.innerWidth();
+					horizontalTrackWidth = horizontalBar.innerWidth();
 					sizeHorizontalScrollbar();
 				}
 			}
