@@ -159,7 +159,7 @@
 					maintainAtBottom = settings.stickToBottom && isCloseToBottom();
 					maintainAtRight  = settings.stickToRight  && isCloseToRight();
 
-					hasContainingSpaceChanged = elem.innerWidth() + originalPaddingTotalWidth != paneWidth || elem.outerHeight() != paneHeight;
+					hasContainingSpaceChanged = elem.innerWidth() + originalPaddingTotalWidth != paneWidth || elem.outerHeight(false) != paneHeight;
 
 					if (hasContainingSpaceChanged) {
 						paneWidth = elem.innerWidth() + originalPaddingTotalWidth;
@@ -171,7 +171,7 @@
 					}
 
 					// If nothing changed since last check...
-					if (!hasContainingSpaceChanged && previousContentWidth == contentWidth && pane.outerHeight() == contentHeight) {
+					if (!hasContainingSpaceChanged && previousContentWidth == contentWidth && pane.outerHeight(false) == contentHeight) {
 						elem.width(paneWidth);
 						return;
 					}
@@ -304,7 +304,7 @@
 					container.find('>.jspVerticalBar>.jspCap:visible,>.jspVerticalBar>.jspArrow').each(
 						function()
 						{
-							verticalTrackHeight -= $(this).outerHeight();
+							verticalTrackHeight -= $(this).outerHeight(false);
 						}
 					);
 
@@ -347,7 +347,7 @@
 			{
 				verticalTrack.height(verticalTrackHeight + 'px');
 				verticalDragPosition = 0;
-				scrollbarWidth = settings.verticalGutter + verticalTrack.outerWidth();
+				scrollbarWidth = settings.verticalGutter + verticalTrack.outerWidth(false);
 
 				// Make the pane thinner to allow for the vertical scrollbar
 				pane.width(paneWidth - scrollbarWidth - originalPaddingTotalWidth);
@@ -437,7 +437,7 @@
 				container.find('>.jspHorizontalBar>.jspCap:visible,>.jspHorizontalBar>.jspArrow').each(
 					function()
 					{
-						horizontalTrackWidth -= $(this).outerWidth();
+						horizontalTrackWidth -= $(this).outerWidth(false);
 					}
 				);
 
@@ -448,13 +448,13 @@
 			function resizeScrollbars()
 			{
 				if (isScrollableH && isScrollableV) {
-					var horizontalTrackHeight = horizontalTrack.outerHeight(),
-						verticalTrackWidth = verticalTrack.outerWidth();
+					var horizontalTrackHeight = horizontalTrack.outerHeight(false),
+						verticalTrackWidth = verticalTrack.outerWidth(false);
 					verticalTrackHeight -= horizontalTrackHeight;
 					$(horizontalBar).find('>.jspCap:visible,>.jspArrow').each(
 						function()
 						{
-							horizontalTrackWidth += $(this).outerWidth();
+							horizontalTrackWidth += $(this).outerWidth(false);
 						}
 					);
 					horizontalTrackWidth -= verticalTrackWidth;
@@ -468,9 +468,9 @@
 				}
 				// reflow content
 				if (isScrollableH) {
-					pane.width((container.outerWidth() - originalPaddingTotalWidth) + 'px');
+					pane.width((container.outerWidth(false) - originalPaddingTotalWidth) + 'px');
 				}
-				contentHeight = pane.outerHeight();
+				contentHeight = pane.outerHeight(false);
 				percentInViewV = contentHeight / paneHeight;
 
 				if (isScrollableH) {
@@ -824,8 +824,8 @@
 				} catch (err) {
 					return;
 				}
-				eleHeight = e.outerHeight();
-				eleWidth= e.outerWidth();
+				eleHeight = e.outerHeight(false);
+				eleWidth= e.outerWidth(false);
 
 				container.scrollTop(0);
 				container.scrollLeft(0);
